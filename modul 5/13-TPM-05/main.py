@@ -1,25 +1,30 @@
-# Program untuk menentukan diskon berdasarkan kartu member dan jumlah belanja
-
-# Input dari pengguna
+# Input
 kartu_member = input("Apakah Anda punya kartu member? (ya/tidak): ").strip().lower()
-belanja = float(input("Berapa total belanja Anda? (dalam rupiah): "))
+belanja = float(input("Masukkan total belanja Anda (Rp): "))
+
+# variabel
+diskon_persen = 0
+diskon = 0
 
 # Logika perhitungan diskon
 if kartu_member == "ya":
     if belanja > 500000:
-        diskon = 50000
-    elif belanja > 100000:
-        diskon = 15000
+        diskon_persen = 0.2 * belanja  # Diskon 20% untuk member dengan belanja > 500rb
     else:
-        diskon = 0
+        diskon_persen = 0.1 * belanja # Diskon 10% untuk member dengan belanja <= 500rb
 else:
-    if belanja > 100000:
-        diskon = 10000
+    if belanja > 500000:
+        diskon_persen = 0.05 * belanja # Diskon 5% untuk non-member dengan belanja > 500rb
     else:
-        diskon = 0
+        print("Maaf anda tidak dapat diskon :).") # Tidak ada diskon untuk non-member dengan belanja <= 500rb
+
+# Menghitung nominal diskon dan total bayar
+diskon = (diskon_persen / 100) * belanja
+total_bayar = belanja - diskon
 
 # Output hasil
-if diskon > 0:
-    print(f"Selamat! Anda mendapatkan diskon sebesar Rp{diskon}.")
-else:
-    print("Maaf, Anda tidak mendapatkan diskon.")
+print("\n===== Detail Transaksi =====")
+print(f"Total Belanja : Rp{belanja:,.0f}")
+print(f"Diskon Persen : {diskon_persen}%")
+print(f"Diskon        : Rp{diskon:,.0f}")
+print(f"Bayar         : Rp{total_bayar:,.0f}")
